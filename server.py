@@ -4,4 +4,4 @@ s.bind(('', 12345))
 while True:
   data, addr = s.recvfrom(1024)
   print(str(data), addr)
-  s.sendto(data.upper(), addr)
+  s.sendto(data, addr)
