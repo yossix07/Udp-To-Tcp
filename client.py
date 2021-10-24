@@ -6,7 +6,7 @@ def main(ip_address, port_number, patch_file):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         file = open(patch_file, "r")
-        file_string = file.read().replace('\n', ' ')
+        file_string = file.read()
         size = 100
         if len(file_string) >= size:
             chunks = [file_string[i:i + size] for i in range(0, len(file_string), size)]
@@ -14,7 +14,7 @@ def main(ip_address, port_number, patch_file):
                 s.sendto(bytes(chunk, 'utf-8'), (ip_address, int(port_number)))
                 data, addr = s.recvfrom(1024)
                 print(str(data), addr)
-            # TODO change print method need to include new lines.
+            # TODO - fix when text is bigger than 100 byes. server desent reply back.
         else:
             s.sendto(bytes(file_string, 'utf-8'), (ip_address, int(port_number)))
             data, addr = s.recvfrom(1024)
