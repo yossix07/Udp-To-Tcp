@@ -12,11 +12,10 @@ def main(ip_address, port_number, patch_file):
         for chunk in chunks:
             s.sendto(bytes(chunk, 'utf-8'), (ip_address, int(port_number)))
             data, addr = s.recvfrom(1024)
-            #send(data, addr)
     else:
         s.sendto(bytes(file_string, 'utf-8'), (ip_address, int(port_number)))
         data, addr = s.recvfrom(1024)
-        #send(data, addr)
+        # send(data, addr)
     print(str(data), addr)
     s.close()
     file.close()
