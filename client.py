@@ -5,7 +5,7 @@ import sys
 def main(ip_address, port_number, patch_file):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     file = open(patch_file, "r")
-    file_string = file.read().replace('\n',' ')
+    file_string = file.read().replace('\n', ' ')
     size = 100
     if len(file_string) >= size:
         chunks = [file_string[i:i+size] for i in range(0, len(file_string), size)]
