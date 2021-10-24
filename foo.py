@@ -13,6 +13,8 @@ MODE = int(sys.argv[4])
 s = socket(AF_INET, SOCK_DGRAM)
 s.bind(('', MY_PORT))
 
+if __name__ == '__main__':
+    pass
 
 def send(data, addr):
     if addr != ALICE_ADDR:
