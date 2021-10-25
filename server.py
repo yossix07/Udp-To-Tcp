@@ -7,8 +7,9 @@ def main(port_number):
     s.bind(('', int(port_number)))
     while True:
         data, addr = s.recvfrom(1024)
-        print(data.decode('utf-8'))
-        s.sendto(data, addr)
+        info = data[:-98]
+        print(info.decode('utf-8'))
+        s.sendto(info, addr)
 
 
 if __name__ == '__main__':

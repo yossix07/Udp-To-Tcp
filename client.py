@@ -7,10 +7,14 @@ def main(ip_address, port_number, patch_file):
     try:
         file = open(patch_file, "r")
         file_string = file.read()
-        size = 100
+        size = 98
+        id_counter = 0
         if len(file_string) >= size:
             chunks = [file_string[i:i + size] for i in range(0, len(file_string), size)]
             for chunk in chunks:
+                # create id for each pocket.
+                id_counter += 1
+                chunk = id_counter + chunk
                 s.sendto(bytes(chunk, 'utf-8'), (ip_address, int(port_number)))
                 data, addr = s.recvfrom(1024)
                 print(str(data), addr)
