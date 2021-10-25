@@ -7,7 +7,7 @@ def main(port_number):
     s.bind(('', int(port_number)))
     while True:
         data, addr = s.recvfrom(1024)
-        print(str(data), addr)
+        print(data.decode('utf-8'))
         s.sendto(data, addr)
 
 

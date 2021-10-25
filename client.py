@@ -1,17 +1,24 @@
 import socket
 import sys
 
+
 def main(ip_address, port_number, patch_file):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
-        with open(patch_file, "rb") as file:
-            while True:
-                chunk = file.read(100)
-                if chunk == b'':
-                    break
-                s.sendto(chunk, (ip_address, int(port_number)))
+        file = open(patch_file, "r")
+        file_string = file.read()
+        size = 100
+        if len(file_string) >= size:
+            chunks = [file_string[i:i + size] for i in range(0, len(file_string), size)]
+            for chunk in chunks:
+                s.sendto(bytes(chunk, 'utf-8'), (ip_address, int(port_number)))
                 data, addr = s.recvfrom(1024)
                 print(str(data), addr)
+            # TODO - fix when text is bigger than 100 byes. server desent reply back.
+        else:
+            s.sendto(bytes(file_string, 'utf-8'), (ip_address, int(port_number)))
+            data, addr = s.recvfrom(1024)
+            print(str(data), addr)
     except ValueError:
         print("Error - wrong patch")
         sys.exit(1)
