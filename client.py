@@ -6,17 +6,16 @@ def main(ip_address, port_number, patch_file):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         with open(patch_file, "rb") as file:
-            id_counter = 0x11
+            header_id = 1
             while True:
                 chunk = file.read(98)
                 if chunk == b'':
                     break
-                # create id for each pocket.
-                chunk = bytes(id_counter) + chunk
-                id_counter += 1
+                chunk = header_id.to_bytes(2, 'little') + chunk
                 s.sendto(chunk, (ip_address, int(port_number)))
                 data, addr = s.recvfrom(1024)
                 print(str(data), addr)
+                header_id += 1
     except ValueError:
         print("Error - wrong patch")
         sys.exit(1)
