@@ -12,7 +12,10 @@ def main(port_number):
         data = data[2:100]
         if id == header:
             print(data.decode('utf-8'))
-        s.sendto(data, addr)
+            s.sendto(data, addr)
+        else:
+            s.sendto(b'^again^', addr)
+        id = id + 1
 
 
 if __name__ == '__main__':
