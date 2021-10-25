@@ -5,12 +5,16 @@ import sys
 def main(ip_address, port_number, patch_file):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
-        with open(patch_file,"rb") as file:
+        with open(patch_file, "rb") as file:
+            id_counter = 0x11
             while True:
-                chunk = file.read(100)
+                chunk = file.read(98)
                 if chunk == b'':
                     break
-                s.sendto(chunk,(ip_address,int(port_number)))
+                # create id for each pocket.
+                chunk = str(id_counter) + chunk
+                id_counter += 1
+                s.sendto(chunk, (ip_address, int(port_number)))
                 data, addr = s.recvfrom(1024)
                 print(str(data), addr)
     except ValueError:

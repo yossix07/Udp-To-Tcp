@@ -5,10 +5,14 @@ import sys
 def main(port_number):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(('', int(port_number)))
+    id_counter = 0
     while True:
         data, addr = s.recvfrom(1024)
-        print(data.decode('utf-8'))
-        s.sendto(data, addr)
+        id = data[:2]
+        # TODO need to check that id == counter
+        info = data[2:100]
+        print(info.decode('utf-8'))
+        s.sendto(info, addr)
 
 
 if __name__ == '__main__':
