@@ -11,9 +11,12 @@ def main(ip_address, port_number, patch_file):
                 chunk = file.read(98)
                 if chunk == b'':
                     break
-                chunk = header_id.to_bytes(2, 'little') + chunk
-                s.sendto(chunk, (ip_address, int(port_number)))
+                id_chunk = header_id.to_bytes(2, 'little') + chunk
+                s.sendto(id_chunk, (ip_address, int(port_number)))
                 data, addr = s.recvfrom(1024)
+                if data != chunk:
+                    s.sendto(id_chunk, (ip_address, int(port_number)))
+                    data, addr = s.recvfrom(1024)
                 print(str(data), addr)
                 header_id += 1
     except ValueError:
