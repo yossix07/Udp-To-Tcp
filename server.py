@@ -5,7 +5,7 @@ import sys
 def main(port_number):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(('', int(port_number)))
-    id_counter = 0
+    id_counter = 0x11
     while True:
         data, addr = s.recvfrom(1024)
         id = data[:2]

@@ -12,7 +12,7 @@ def main(ip_address, port_number, patch_file):
                 if chunk == b'':
                     break
                 # create id for each pocket.
-                chunk = str(id_counter) + chunk
+                chunk = bytes(id_counter) + chunk
                 id_counter += 1
                 s.sendto(chunk, (ip_address, int(port_number)))
                 data, addr = s.recvfrom(1024)
