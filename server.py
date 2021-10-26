@@ -5,13 +5,13 @@ import sys
 def main(port_number):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(('', int(port_number)))
-    id = 1
+    id = 0
     while True:
         data, addr = s.recvfrom(1024)
         header = int.from_bytes(data[:2], 'little')
         data = data[2:100]
         if id == header:
-            print(data.decode('utf-8'), end = '')
+            print(data.decode('utf-8'), end='')
             id += 1
             s.sendto(data, addr)
         else:

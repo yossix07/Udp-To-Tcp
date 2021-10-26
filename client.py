@@ -4,26 +4,29 @@ import sys
 
 def main(ip_address, port_number, patch_file):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.settimeout(2)
     try:
         with open(patch_file, "rb") as file:
-            header_id = 1
+            header_id = 0
             while True:
                 chunk = file.read(98)
                 if chunk == b'':
                     break
                 while True:
+                    print("trying: ")
+                    print(header_id)
+                    id_chunk = header_id.to_bytes(2, 'little') + chunk
+                    s.sendto(id_chunk, (ip_address, int(port_number)))
+                    s.settimeout(3)
                     try:
-                        id_chunk = header_id.to_bytes(2, 'little') + chunk
-                        s.sendto(id_chunk, (ip_address, int(port_number)))
                         data, addr = s.recvfrom(1024)
-                        while data != chunk:
-                            s.sendto(id_chunk, (ip_address, int(port_number)))
-                            data, addr = s.recvfrom(1024)
-                        print(str(data), addr)
                         header_id += 1
-                        break
+                        if data == chunk:
+                            print(str(data), addr)
+                            break
+                        else:
+                            continue
                     except socket.timeout:
+                        print("not recive")
                         continue
     except ValueError:
         print("Error - wrong patch")
