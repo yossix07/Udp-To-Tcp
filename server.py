@@ -11,10 +11,9 @@ def main(port_number):
         header = int.from_bytes(data[:2], 'little')
         data = data[2:100]
         if id == header:
-            print(data.decode('utf-8'))
+            print(data.decode('utf-8'), end = '')
             id += 1
-            while True:
-                s.sendto(data, addr)
+            s.sendto(data, addr)
         else:
             s.sendto(b'^again^', addr)
 
