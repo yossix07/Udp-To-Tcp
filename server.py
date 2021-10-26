@@ -5,17 +5,20 @@ import sys
 def main(port_number):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(('', int(port_number)))
-    id = 0
+    package_id = 0
     while True:
         data, addr = s.recvfrom(1024)
         header = int.from_bytes(data[:2], 'little')
-        data = data[2:100]
-        if id == header:
-            print(data.decode('utf-8'), end='')
-            id += 1
-            s.sendto(data, addr)
-        else:
-            s.sendto(b'^again^', addr)
+        info = data[2:100]
+        # check if this the required package
+        if package_id == header:
+            print(info.decode('utf-8'), end='')
+            package_id += 1
+            s.sendto(info, addr)
+        while header < package_id:
+            s.sendto(info, addr)
+            data, addr = s.recvfrom(1024)
+            header = int.from_bytes(data[:2], 'little')
 
 
 if __name__ == '__main__':

@@ -11,20 +11,19 @@ def main(ip_address, port_number, patch_file):
                 chunk = file.read(98)
                 if chunk == b'':
                     break
+                id_chunk = header_id.to_bytes(2, 'little') + chunk
                 while True:
-                    id_chunk = header_id.to_bytes(2, 'little') + chunk
                     s.sendto(id_chunk, (ip_address, int(port_number)))
                     s.settimeout(3)
                     try:
                         data, addr = s.recvfrom(1024)
                         if data == chunk:
-                            header_id += 1
                             print(str(data), addr)
+                            header_id += 1
                             break
                         else:
                             continue
                     except socket.timeout:
-
                         continue
     except ValueError:
         print("Error - wrong patch")
