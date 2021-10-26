@@ -12,7 +12,6 @@ def main(ip_address, port_number, patch_file):
                 if chunk == b'':
                     break
                 while True:
-                    print("trying: ")
                     print(header_id)
                     id_chunk = header_id.to_bytes(2, 'little') + chunk
                     s.sendto(id_chunk, (ip_address, int(port_number)))
@@ -26,7 +25,7 @@ def main(ip_address, port_number, patch_file):
                         else:
                             continue
                     except socket.timeout:
-                        print("not recive")
+
                         continue
     except ValueError:
         print("Error - wrong patch")
