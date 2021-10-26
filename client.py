@@ -14,7 +14,7 @@ def main(ip_address, port_number, patch_file):
                 id_chunk = header_id.to_bytes(2, 'little') + chunk
                 while True:
                     s.sendto(id_chunk, (ip_address, int(port_number)))
-                    s.settimeout(3)
+                    s.settimeout(0.5)
                     try:
                         data, addr = s.recvfrom(1024)
                         if data == chunk:
