@@ -12,14 +12,13 @@ def main(ip_address, port_number, patch_file):
                 if chunk == b'':
                     break
                 while True:
-                    print(header_id)
                     id_chunk = header_id.to_bytes(2, 'little') + chunk
                     s.sendto(id_chunk, (ip_address, int(port_number)))
                     s.settimeout(3)
                     try:
                         data, addr = s.recvfrom(1024)
-                        header_id += 1
                         if data == chunk:
+                            header_id += 1
                             print(str(data), addr)
                             break
                         else:
