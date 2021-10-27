@@ -2,6 +2,7 @@ import socket
 import sys
 
 
+# constants
 class CONST:
     @staticmethod
     def DATA_SIZE():
