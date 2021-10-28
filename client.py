@@ -26,11 +26,11 @@ class CONST:
 
     @staticmethod
     def ARG_TWO():
-        return 1
+        return 2
 
     @staticmethod
     def ARG_THREE():
-        return 1
+        return 3
 
     @staticmethod
     def FIRST_ID():
