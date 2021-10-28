@@ -51,6 +51,7 @@ def server(port_number):
             current_wanted_id += 1
             s.sendto(info, address)
 
+        # as long as the confirmation of receiving the package is lost, send it again
         while header < current_wanted_id:
             s.sendto(info, address)
             data, address = s.recvfrom(CONST.DATA_SIZE_LIMIT())
