@@ -14,7 +14,7 @@ class CONST:
 
     @staticmethod
     def TIME_DELAY():
-        return 0.5
+        return 10
 
     @staticmethod
     def DATA_SIZE_LIMIT():
