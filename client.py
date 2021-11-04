@@ -36,6 +36,14 @@ class CONST:
     def FIRST_ID():
         return 0
 
+    @staticmethod
+    def STARTING_PORT():
+        return 0
+
+    @staticmethod
+    def ENDING_PORT():
+        return 65535
+
 
 # read the received file's text and
 # send it to application with the revived port, on the server with the received ip address
@@ -73,21 +81,41 @@ def client(ip_address, port_number, patch_file):
                         continue
                 chunk = file.read(CONST.DATA_SIZE())
     except ValueError:
-        print("Error - wrong patch")
+        print("Error - Wrong Patch!")
         sys.exit(1)
     finally:
         s.close()
         file.close()
 
 
-# runs client's program - user enters ip address of a server, an application's port number and a patch to text file
-# and send it to the relevant application on the relevant server
+# check if the received ip address is in correct format.
+def check_ip(ip_address):
+    ip = ip_address.split(".")
+
+    # in case the address doesnt has 4 ".", it is invalid
+    if len(ip) != 4:
+        return False
+    # in case one of the segments in the address isn't in the wanted range, it is invalid
+    for num in ip:
+        if int(num) > 255 or int(num) < 0:
+            return False
+    return True
+
+
+# runs the client program
 if __name__ == '__main__':
     try:
-        ip_address = sys.argv[CONST.ARG_ONE()]
-        port_number = sys.argv[CONST.ARG_TWO()]
+        port_number = sys.argv[CONST.ARG_ONE()]
+        ip_address = sys.argv[CONST.ARG_TWO()]
         patch_file = sys.argv[CONST.ARG_THREE()]
+
+        # in case the port or ip address arent valid, exit
+        if int(port_number) < CONST.STARTING_PORT() or int(port_number) > CONST.ENDING_PORT() \
+                or not check_ip(ip_address):
+            raise ValueError
+
+        # run client
         client(ip_address, port_number, patch_file)
     except ValueError:
-        print("Error - wrong arguments")
+        print("Error - Wrong Arguments!")
         sys.exit(1)
