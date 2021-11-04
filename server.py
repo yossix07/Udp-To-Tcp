@@ -24,6 +24,14 @@ class CONST:
     def ARG_ONE():
         return 1
 
+    @staticmethod
+    def STARTING_PORT():
+        return 0
+
+    @staticmethod
+    def ENDING_PORT():
+        return 65535
+
 
 # activate the server with the received port number and replay to the client when got a new package and when got
 # an already received package accordingly
@@ -60,5 +68,15 @@ def server(port_number):
 
 # runs the server process with the received port number
 if __name__ == '__main__':
-    port_number = sys.argv[CONST.ARG_ONE()]
-    server(port_number)
+    try:
+        port_number = sys.argv[CONST.ARG_ONE()]
+
+        # in case the port isn't valid, exit
+        if int(port_number) < CONST.STARTING_PORT() or int(port_number) > CONST.ENDING_PORT():
+            raise ValueError
+
+        # run server
+        server(port_number)
+    except ValueError:
+        print("Error - Wrong Arguments!")
+        sys.exit(1)
