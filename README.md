@@ -1,6 +1,6 @@
 # UdpToTcp
 **A little preview** -
-As you might know udp is a straight foword protocal who just "sends and hopes for the best".
+As you might know, udp is a straight foword protocal who just "sends and hopes for the best".
 In addition, Tcp is a more sofisticated protocol that make sure all data has been received properly(in the currect order, etc...).
 
 ****Discreption** -**
