@@ -4,4 +4,4 @@ As you might know udp is a straight foword protocal who just "sends and hopes fo
 In addition, Tcp is a more sofisticated protocol that make sure all data has been received properly(in the currect order, etc...).
 
 ****Discreption** -**
-In this project, my parther Naor Alkobi and I made a client-sever protocol that uses an udp socket that implements tcp protocol in the aplication layer, resulting a "Udp-To-Tcp" socket.
+In this project, my parther Naor Alkobi and I, made a client-sever protocol that uses an udp socket that implements tcp protocol in the aplication layer, resulting a "Udp-To-Tcp" socket.
